@@ -3,12 +3,8 @@
 import argparse
 from collections import namedtuple
 from enum import Enum
-import json
 import minimalmodbus
-import os
 import serial
-import sys
-import time
 
 
 class SystemType(Enum):
@@ -99,8 +95,7 @@ class Attribute(Register, Enum):
 
 
 class Controller(object):
-
-    def __init__(self, device='/dev/ttyUSB0', debug=False):
+    def __init__(self, device="/dev/ttyUSB0", debug=False):
         self.renogy = minimalmodbus.Instrument(device, 1)
         self.renogy.serial.baudrate = 9600
         self.renogy.serial.bytesize = 8
@@ -114,26 +109,17 @@ class Controller(object):
         return attr.function(int(value)) if attr.function else round(value, 2)
 
     def get_all(self, attrs=Attribute):
-        values = { attr.name.lower() : self.get(attr) for attr in attrs }
-        values['timestamp'] = int(time.time())
+        values = {attr.name.lower(): self.get(attr) for attr in attrs}
         return values
 
 
-def configure():
-    parser = argparse.ArgumentParser(description='Renogy charge controller monitor')
-    parser.add_argument('--device', '-d', default='/dev/ttyUSB0', help='Serial device')
-    parser.add_argument('--verbose', '-v', action='store_true', help='Verbose modbus output')
-    return parser.parse_args()
-
-
-def main():
-    args = configure()
-    controller = Controller(args.device, args.verbose)
-    print(json.dumps(controller.get_all()))
-
-    return 0
-
-
 if __name__ == "__main__":
-    ret = main()
-    sys.exit(ret)
+    parser = argparse.ArgumentParser(description="Renogy charge controller monitor")
+    parser.add_argument("--device", default="/dev/ttyUSB0", help="Serial device")
+    parser.add_argument("--debug", action="store_true", help="Enable modbus debug")
+    args = parser.parse_args()
+
+    controller = Controller(args.device, args.debug)
+
+    for name, value in controller.get_all().items():
+        print(f"{name:>20}: {value}")
