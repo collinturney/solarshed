@@ -1,5 +1,7 @@
 # solarshed
 
+![solarshed](images/solarshed.jpg)
+
 ## Renogy Wanderer RS232
 
 ### RJ12 Pinout
