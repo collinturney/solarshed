@@ -1,6 +1,6 @@
 # solarshed
 
-![solarshed](images/solarshed.jpg)
+![solarshed](images/shed.jpg)
 
 ## Renogy Wanderer RS232
 
