@@ -2,6 +2,13 @@
 
 ![solarshed](images/shed.jpg)
 
+| Component | Description |
+| --- | --- |
+| `renogy.py` | Renogy charge controller / inverter monitoring software |
+| `cadence.py` | Simple HTTP metrics service |
+| `timeseries.py` | Time series data storage and retrieval |
+| `solar_monitor.py` | Solar metrics logger |
+
 ## Renogy Wanderer RS232
 
 ### RJ12 Pinout
@@ -63,6 +70,27 @@ The 6 pins on the RJ12 connector are `TX | RX | GND | GND | PWR | PWR` from left
 
 ## Solar Monitoring
 
+```python
+import requests
+import pandas as pd
+import plotly.graph_objects as go
+
+def plot(df, x, y):
+    fig = go.Figure([go.Scatter(x=df[x], y=df[y], marker_color='black', opacity=0.6)])
+    fig.update_layout(title=y)
+    fig.show()
+
+response = requests.get('http://192.168.1.195:5000/metric/solarshed')
+df = pd.DataFrame(response.json())
+df['time'] = pd.to_datetime(df['time'], unit='s')
+
+plot(df, 'time', 'panel_volts')
+```
+
 ![panel_volts](images/panel_volts.png)
+
+```python
+plot(df, 'time', 'charging_state')
+```
 
 ![charging_state](images/charging_state.png)
