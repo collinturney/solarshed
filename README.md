@@ -60,3 +60,9 @@ The 6 pins on the RJ12 connector are `TX | RX | GND | GND | PWR | PWR` from left
 | OVER\_DISCH\_VOLTS | 0xE00D | 0.1 | V | -
 | DISCH\_WARN\_VOLTS | 0xE00E | 0.1 | V | -
 | BOOST\_TIME | 0xE012 | 1 |  | -
+
+## Solar Monitoring
+
+![panel_volts](images/panel_volts.png)
+
+![charging_state](images/charging_state.png)
