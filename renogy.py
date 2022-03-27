@@ -96,7 +96,7 @@ class Attribute(Register, Enum):
 
 class Controller(object):
     def __init__(self, device="/dev/ttyUSB0", debug=False):
-        self.renogy = minimalmodbus.Instrument(device, 1)
+        self.renogy = minimalmodbus.Instrument(device, 0xFF)
         self.renogy.serial.baudrate = 9600
         self.renogy.serial.bytesize = 8
         self.renogy.serial.parity = serial.PARITY_NONE
