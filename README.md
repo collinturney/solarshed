@@ -1,4 +1,4 @@
-# solarshed
+# ☀️ solarshed
 
 ![solarshed](images/shed.jpg)
 
